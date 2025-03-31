@@ -112,8 +112,39 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
   const video = module.videos[videoIndex];
   const isLastVideo = videoIndex === module.videos.length - 1;
   
+  // Função para parar a contagem regressiva
+  const stopCountdown = () => {
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
+  };
+  
   // Detectar quando o usuário sai da página ou guia
   useEffect(() => {
+    // Definir a função startCountdown dentro do useEffect para evitar erros ESLint
+    const startCountdown = () => {
+      setCountdown(180); // Resetar para 3 minutos
+      
+      if (countdownIntervalRef.current) {
+        clearInterval(countdownIntervalRef.current);
+      }
+      
+      countdownIntervalRef.current = setInterval(() => {
+        setCountdown(prev => {
+          if (prev <= 1) {
+            // Tempo esgotado, reset do módulo
+            stopCountdown();
+            resetModule(moduleId);
+            // Recarregar a página para começar o módulo novamente
+            window.location.reload();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    };
+
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         // Usuário saiu da página
@@ -140,36 +171,7 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       stopCountdown();
     };
-  }, [player, showAlert, videoEnded, startCountdown]);
-  
-  const startCountdown = () => {
-    setCountdown(180); // Resetar para 3 minutos
-    
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-    }
-    
-    countdownIntervalRef.current = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          // Tempo esgotado, reset do módulo
-          stopCountdown();
-          resetModule(moduleId);
-          // Recarregar a página para começar o módulo novamente
-          window.location.reload();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-  };
-  
-  const stopCountdown = () => {
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-  };
+  }, [player, showAlert, videoEnded, moduleId, resetModule, stopCountdown]);
   
   const handleReady = (event) => {
     setPlayer(event.target);
