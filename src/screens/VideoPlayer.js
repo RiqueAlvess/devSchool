@@ -140,7 +140,7 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       stopCountdown();
     };
-  }, [player, showAlert, videoEnded]);
+  }, [player, showAlert, videoEnded, startCountdown]);
   
   const startCountdown = () => {
     setCountdown(180); // Resetar para 3 minutos
