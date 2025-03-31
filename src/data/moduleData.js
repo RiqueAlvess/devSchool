@@ -14,15 +14,15 @@ const moduleData = {
             }
         ],
         quizzes: [
-            // Primeira variação do quiz para Módulo 1
+            // Primeira variação do quiz para Módulo 1 (API)
             [
                 {
                     question: "O que significa a sigla API?",
                     options: [
                         "Application Programming Interface",
                         "Advanced Programming Interface",
-                        "Application Protocol Interface",
-                        "Advanced Protocol Integration"
+                        "Application Program Integration",
+                        "Automatic Protocol Interface"
                     ],
                     correctAnswer: 0
                 },
@@ -57,14 +57,14 @@ const moduleData = {
                     correctAnswer: 3
                 },
                 {
-                    question: "Qual destas NÃO é uma parte comum de uma URL de API?",
+                    question: "De acordo com o vídeo, qual método HTTP é usado para atualizar dados existentes?",
                     options: [
-                        "Endpoint",
-                        "Query parameters",
-                        "Base URL",
-                        "HTML tags"
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE"
                     ],
-                    correctAnswer: 3
+                    correctAnswer: 2
                 },
                 {
                     question: "Para converter uma resposta JSON para um dicionário Python, qual método você usaria?",
@@ -87,65 +87,65 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "O que é necessário para acessar muitas APIs públicas?",
+                    question: "No exemplo do vídeo sobre API do Rick and Morty, qual método foi usado para obter dados dos personagens?",
                     options: [
-                        "Chave de API (API Key)",
-                        "Endereço de e-mail",
-                        "Conta premium",
-                        "Certificado SSL"
-                    ],
-                    correctAnswer: 0
-                },
-                {
-                    question: "Qual destas é uma vantagem de usar APIs?",
-                    options: [
-                        "Sempre são gratuitas",
-                        "Permitem acesso a dados e funcionalidades externas",
-                        "Nunca precisam de autenticação",
-                        "Funcionam apenas em Python"
+                        "POST",
+                        "GET",
+                        "PUT",
+                        "DELETE"
                     ],
                     correctAnswer: 1
                 },
                 {
-                    question: "O que acontece se você tentar acessar uma API com credenciais inválidas?",
+                    question: "De acordo com os vídeos, qual é a função da biblioteca 'requests' em Python?",
                     options: [
-                        "A API responde com dados aleatórios",
-                        "A API ignora a requisição",
-                        "A API responde com um erro (geralmente 401 ou 403)",
-                        "A API corrige automaticamente suas credenciais"
+                        "Criar interfaces gráficas",
+                        "Fazer requisições para APIs e sites",
+                        "Manipular arquivos locais",
+                        "Processar imagens"
                     ],
-                    correctAnswer: 2
+                    correctAnswer: 1
+                },
+                {
+                    question: "Como você pode verificar se uma requisição para uma API foi bem-sucedida?",
+                    options: [
+                        "Verificando se o código de status é 200",
+                        "Olhando a documentação da API",
+                        "Verificando a velocidade da resposta",
+                        "Contando o número de caracteres retornados"
+                    ],
+                    correctAnswer: 0
                 }
             ],
-            // Segunda variação do quiz para Módulo 1
+            // Segunda variação do quiz para Módulo 1 (API)
             [
                 {
-                    question: "Qual é o principal propósito de uma API REST?",
+                    question: "Na analogia do garçom apresentada no vídeo, o que representaria a API?",
                     options: [
-                        "Armazenar dados em um banco de dados",
-                        "Facilitar a comunicação entre sistemas",
-                        "Renderizar páginas HTML",
-                        "Comprimir arquivos"
+                        "O cliente sentado na mesa",
+                        "O garçom",
+                        "A comida servida",
+                        "A cozinha"
                     ],
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é um parâmetro de consulta (query parameter) em uma URL de API?",
+                    question: "Qual método HTTP seria adequado para criar um novo recurso em uma API?",
                     options: [
-                        "Uma parte da URL que filtra ou especifica os dados solicitados",
-                        "Um código de erro",
-                        "Um tipo de autenticação",
-                        "Um tipo de protocolo HTTP"
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE"
                     ],
-                    correctAnswer: 0
+                    correctAnswer: 1
                 },
                 {
-                    question: "Em Python, como você adiciona cabeçalhos (headers) a uma requisição API?",
+                    question: "Em Python, como você adiciona parâmetros a uma requisição GET?",
                     options: [
-                        "requests.get(url, headers={'key': 'value'})",
+                        "requests.get(url, params={'key': 'value'})",
                         "requests.get(url, header='key:value')",
-                        "requests.get(url, params={'header': 'value'})",
-                        "requests.get(url).headers('key', 'value')"
+                        "requests.get(url, data={'key': 'value'})",
+                        "requests.get(url).params('key', 'value')"
                     ],
                     correctAnswer: 0
                 },
@@ -160,14 +160,14 @@ const moduleData = {
                     correctAnswer: 3
                 },
                 {
-                    question: "Qual destas NÃO é um método HTTP comum usado em APIs REST?",
+                    question: "De acordo com o segundo vídeo, o que acontece quando você tenta acessar uma API com credenciais inválidas?",
                     options: [
-                        "GET",
-                        "POST",
-                        "DELETE",
-                        "SEARCH"
+                        "A API responde com dados aleatórios",
+                        "A API ignora a requisição",
+                        "A API responde com um erro (geralmente 401 ou 403)",
+                        "A API corrige automaticamente suas credenciais"
                     ],
-                    correctAnswer: 3
+                    correctAnswer: 2
                 },
                 {
                     question: "Como você lida com erros ao fazer requisições API em Python?",
@@ -180,12 +180,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é uma API rate limit?",
+                    question: "No exemplo do Firebase mostrado no vídeo, qual método é usado para criar uma nova entrada no banco de dados?",
                     options: [
-                        "A velocidade de transferência de dados da API",
-                        "O número máximo de requisições permitidas em um período",
-                        "O tamanho máximo de resposta da API",
-                        "O número mínimo de parâmetros necessários"
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE"
                     ],
                     correctAnswer: 1
                 },
@@ -200,27 +200,27 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "O que é necessário verificar antes de publicar código que usa uma API?",
+                    question: "De acordo com o vídeo, qual método HTTP é usado para deletar dados?",
                     options: [
-                        "Se a API está listada no GitHub",
-                        "Os termos de serviço e licença da API",
-                        "Se a API foi criada recentemente",
-                        "O país de origem da API"
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 3
                 },
                 {
-                    question: "Qual é uma boa prática ao fazer requisições para APIs em produção?",
+                    question: "Qual método do Firebase mostrado no vídeo permite atualizar dados existentes?",
                     options: [
-                        "Sempre usar o método GET",
-                        "Nunca armazenar as respostas em cache",
-                        "Implementar retentativas com backoff exponencial",
-                        "Fazer o máximo de requisições possíveis para garantir dados atualizados"
+                        "GET",
+                        "POST",
+                        "PATCH",
+                        "DELETE"
                     ],
                     correctAnswer: 2
                 }
             ],
-            // Terceira variação do quiz para Módulo 1
+            // Terceira variação do quiz para Módulo 1 (API)
             [
                 {
                     question: "O que é um payload em uma requisição API?",
@@ -233,22 +233,22 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual método HTTP é usado para atualizar um recurso existente em uma API RESTful?",
+                    question: "De acordo com o vídeo, qual é a função do método PATCH em uma API?",
                     options: [
-                        "GET",
-                        "POST",
-                        "PUT ou PATCH",
-                        "DELETE"
+                        "Obter dados",
+                        "Criar novos dados",
+                        "Atualizar dados parcialmente",
+                        "Deletar dados"
                     ],
                     correctAnswer: 2
                 },
                 {
-                    question: "Como você pode lidar com respostas paginadas de uma API em Python?",
+                    question: "Na biblioteca requests, como você converte a resposta da API em um formato utilizável em Python?",
                     options: [
-                        "Apenas solicitando a primeira página",
-                        "Implementando um loop para solicitar cada página",
-                        "As APIs não suportam paginação",
-                        "Usando o parâmetro 'all_pages=True'"
+                        "response.parse()",
+                        "response.json()",
+                        "response.convert()",
+                        "response.python()"
                     ],
                     correctAnswer: 1
                 },
@@ -263,24 +263,24 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "Qual é uma maneira comum de autenticar requisições API?",
+                    question: "De acordo com o vídeo do Firebase, ao fazer uma requisição POST, o que acontece se você não passar nenhuma informação?",
                     options: [
-                        "Apenas com o endereço IP",
-                        "Usando tokens JWT ou chaves API",
-                        "Apenas com nome de usuário",
-                        "As APIs modernas não requerem autenticação"
+                        "A requisição é bem-sucedida, mas nada é criado",
+                        "Um erro 400 é retornado",
+                        "A API cria um recurso vazio",
+                        "A API usa valores padrão"
                     ],
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é uma API webhook?",
+                    question: "Quais são os quatro tipos principais de requisições mostrados no segundo vídeo?",
                     options: [
-                        "Uma API que só aceita requisições POST",
-                        "Uma API que notifica seu aplicativo quando um evento ocorre",
-                        "Uma API usada exclusivamente para web scraping",
-                        "Uma API desenvolvida pela empresa Web Inc."
+                        "READ, WRITE, UPDATE, REMOVE",
+                        "INSERT, SELECT, UPDATE, DELETE",
+                        "GET, POST, PUT/PATCH, DELETE",
+                        "FETCH, CREATE, MODIFY, ERASE"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 2
                 },
                 {
                     question: "Ao trabalhar com APIs, por que é importante validar dados de entrada e saída?",
@@ -293,27 +293,27 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é uma API GraphQL?",
+                    question: "De acordo com o vídeo, qual é a instrução Python para instalar a biblioteca requests?",
                     options: [
-                        "Uma API que retorna apenas dados em formato de gráfico",
-                        "Uma API que usa exclusivamente o método GET",
-                        "Uma API que permite ao cliente especificar exatamente quais dados quer receber",
-                        "Uma API desenvolvida pelo Google"
+                        "install requests",
+                        "python -m install requests",
+                        "pip install requests",
+                        "python requests install"
                     ],
                     correctAnswer: 2
                 },
                 {
-                    question: "Qual é a diferença entre uma API síncrona e assíncrona em Python?",
+                    question: "No exemplo do Firebase, por que é necessário adicionar '.json' ao final da URL?",
                     options: [
-                        "API síncrona é gratuita, API assíncrona é paga",
-                        "API síncrona bloqueia a execução até receber a resposta, API assíncrona permite continuar executando código enquanto espera",
-                        "API síncrona retorna JSON, API assíncrona retorna XML",
-                        "API síncrona é mais rápida, API assíncrona é mais lenta"
+                        "Para converter a resposta automaticamente para Python",
+                        "É uma regra específica do Firebase para indicar o formato de dados",
+                        "Para acelerar a requisição",
+                        "Para evitar erros de CORS"
                     ],
                     correctAnswer: 1
                 },
                 {
-                    question: "Por que é importante verificar a documentação de uma API antes de usá-la?",
+                    question: "Por que verificar a documentação de uma API antes de usá-la?",
                     options: [
                         "Para conhecer os endpoints, parâmetros, limites de taxa e formatos de resposta",
                         "Porque é ilegal usar uma API sem ler a documentação",
@@ -340,7 +340,7 @@ const moduleData = {
             }
         ],
         quizzes: [
-            // Primeira variação do quiz para Módulo 2
+            // Primeira variação do quiz para Módulo 2 (Automação)
             [
                 {
                     question: "Qual biblioteca Python é frequentemente usada para automatizar tarefas no navegador?",
@@ -353,12 +353,12 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "O que é um bot em automação com Python?",
+                    question: "O que é um WebDriver no contexto do Selenium?",
                     options: [
-                        "Um programa malicioso",
-                        "Um programa que realiza tarefas automatizadas",
-                        "Um dispositivo de hardware",
-                        "Um tipo de servidor web"
+                        "Um plugin de navegador",
+                        "Um componente que permite ao Python controlar um navegador",
+                        "Um servidor proxy para requisições web",
+                        "Um arquivo de configuração para automação"
                     ],
                     correctAnswer: 1
                 },
@@ -383,24 +383,24 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual biblioteca Python é frequentemente usada para enviar e-mails automaticamente?",
+                    question: "No Selenium, como você encontra um elemento na página por seu XPath?",
                     options: [
-                        "mailbot",
-                        "smtplib",
-                        "emailpy",
-                        "automailsender"
+                        "driver.find_element_by_xpath('xpath')",
+                        "driver.find_element(By.XPATH, 'xpath')",
+                        "driver.get_element('xpath')",
+                        "driver.select_xpath('xpath')"
                     ],
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é um script cron?",
+                    question: "No contexto de automação, o que é um 'headless browser'?",
                     options: [
-                        "Um tipo de vírus",
-                        "Um script para criptografia de dados",
-                        "Um script que é executado em intervalos regulares",
-                        "Um programa para edição de texto"
+                        "Um navegador sem interface gráfica",
+                        "Um navegador com menor consumo de memória",
+                        "Um navegador que não armazena histórico",
+                        "Um navegador sem suporte a JavaScript"
                     ],
-                    correctAnswer: 2
+                    correctAnswer: 0
                 },
                 {
                     question: "Qual função do módulo 'os' do Python permite executar comandos do sistema operacional?",
@@ -423,30 +423,30 @@ const moduleData = {
                     correctAnswer: 0
                 },
                 {
-                    question: "O que é o módulo 'time' usado para em scripts de automação?",
+                    question: "Qual comando é usado para clicar em um botão usando Selenium?",
                     options: [
-                        "Medir o tempo de execução do script",
-                        "Criar pausas e atrasos no script",
-                        "Definir o fuso horário",
-                        "Todas as opções acima"
+                        "elemento.press()",
+                        "elemento.click()",
+                        "elemento.submit()",
+                        "elemento.activate()"
                     ],
-                    correctAnswer: 3
+                    correctAnswer: 1
                 },
                 {
-                    question: "Qual biblioteca permite criar interfaces gráficas para automações Python?",
+                    question: "Como você instala o Selenium no Python?",
                     options: [
-                        "PyAutoGUI",
-                        "Tkinter",
-                        "UI-Python",
-                        "PythonFace"
+                        "apt-get install selenium",
+                        "pip install selenium",
+                        "conda install selenium",
+                        "python -m install selenium"
                     ],
                     correctAnswer: 1
                 }
             ],
-            // Segunda variação do quiz para Módulo 2
+            // Segunda variação do quiz para Módulo 2 (Automação)
             [
                 {
-                    question: "Qual biblioteca permite automatizar movimentos do mouse e teclado?",
+                    question: "Qual biblioteca permite automatizar movimentos do mouse e teclado no Python?",
                     options: [
                         "MousePy",
                         "PyAutoGUI",
@@ -456,14 +456,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual destas NÃO é uma aplicação comum para automação com Python?",
+                    question: "Na versão 4 do Selenium, qual é a nova forma recomendada de localizar elementos?",
                     options: [
-                        "Preenchimento automático de formulários",
-                        "Processamento de imagens em lote",
-                        "Renderização 3D em tempo real",
-                        "Geração de relatórios automáticos"
+                        "driver.find('xpath', 'valor')",
+                        "driver.find_element(By.XPATH, 'valor')",
+                        "driver.locate_element('xpath', 'valor')",
+                        "driver.search('xpath', 'valor')"
                     ],
-                    correctAnswer: 2
+                    correctAnswer: 1
                 },
                 {
                     question: "O que é o agendador de tarefas do Windows usado para executar scripts automaticamente?",
@@ -476,12 +476,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual método é usado para salvar dados em um arquivo CSV usando a biblioteca Pandas?",
+                    question: "Que vantagem o WebDriver Manager traz para projetos com Selenium?",
                     options: [
-                        "df.save_csv()",
-                        "df.to_csv()",
-                        "pandas.write_csv(df)",
-                        "csv.write(df)"
+                        "Aumento de performance na automação",
+                        "Download e gerenciamento automático do driver correto do navegador",
+                        "Integração com bancos de dados",
+                        "Suporte a mais idiomas de programação"
                     ],
                     correctAnswer: 1
                 },
@@ -516,7 +516,7 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "O que é RPA em automação?",
+                    question: "O que é RPA no contexto de automação?",
                     options: [
                         "Robotic Protocol Authorization",
                         "Robotic Process Automation",
@@ -526,14 +526,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual biblioteca pode converter PDF em texto para automação?",
+                    question: "Qual método do Selenium é usado para preencher um campo de texto?",
                     options: [
-                        "pdf-reader",
-                        "pypdf2 ou pdfminer",
-                        "textract-pdf",
-                        "pdfconverter"
+                        "elemento.fill('texto')",
+                        "elemento.value = 'texto'",
+                        "elemento.send_keys('texto')",
+                        "elemento.input('texto')"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 2
                 },
                 {
                     question: "Qual é uma boa prática ao criar scripts de automação?",
@@ -546,7 +546,7 @@ const moduleData = {
                     correctAnswer: 1
                 }
             ],
-            // Terceira variação do quiz para Módulo 2
+            // Terceira variação do quiz para Módulo 2 (Automação)
             [
                 {
                     question: "Qual biblioteca Python permite manipular imagens para automação?",
@@ -559,14 +559,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é um 'headless browser' em automação web?",
+                    question: "Qual comando Selenium é usado para abrir uma URL em um navegador automatizado?",
                     options: [
-                        "Um navegador sem interface gráfica",
-                        "Um navegador para usuários com deficiência visual",
-                        "Um navegador que não armazena histórico",
-                        "Um dispositivo para web scraping"
+                        "browser.navigate(url)",
+                        "browser.get(url)",
+                        "browser.open(url)",
+                        "browser.load(url)"
                     ],
-                    correctAnswer: 0
+                    correctAnswer: 1
                 },
                 {
                     question: "Qual destas ferramentas é específica para automação de testes?",
@@ -599,14 +599,14 @@ const moduleData = {
                     correctAnswer: 0
                 },
                 {
-                    question: "O que significa o acrônimo API no contexto de automação?",
+                    question: "O que o Selenium WebDriver faz em um projeto de automação?",
                     options: [
-                        "Automatic Programming Interface",
-                        "Application Programming Interface",
-                        "Automated Process Integration",
-                        "Application Process Instruction"
+                        "Comprime arquivos para torná-los mais rápidos",
+                        "Melhora a interface gráfica dos navegadores",
+                        "Permite que o código Python controle um navegador",
+                        "Gera relatórios automáticos de uso da internet"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 2
                 },
                 {
                     question: "Qual biblioteca é usada para reconhecimento óptico de caracteres (OCR) em Python?",
@@ -619,12 +619,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é uma 'tarefa agendada' no contexto de automação?",
+                    question: "Para que serve o XPath no contexto do Selenium?",
                     options: [
-                        "Uma função que tem um prazo para ser concluída",
-                        "Um script programado para ser executado em momentos específicos",
-                        "Um bug que aparece em momentos determinados",
-                        "Um tipo de armazenamento temporário"
+                        "Para medir a velocidade de execução do script",
+                        "Para localizar elementos HTML em uma página web",
+                        "Para executar JavaScript no navegador",
+                        "Para otimizar o consumo de memória"
                     ],
                     correctAnswer: 1
                 },
@@ -639,11 +639,11 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual destas é uma vantagem da automação em Python?",
+                    question: "Qual é a principal vantagem da automação com Selenium mostrada nos vídeos?",
                     options: [
                         "Executada apenas em sistemas Windows",
                         "Funciona apenas com tarefas simples",
-                        "Reduz erros humanos e aumenta a eficiência",
+                        "Simula ações humanas em um navegador real",
                         "Requer hardware especializado"
                     ],
                     correctAnswer: 2
@@ -666,7 +666,7 @@ const moduleData = {
             }
         ],
         quizzes: [
-            // Primeira variação do quiz para Módulo 3
+            // Primeira variação do quiz para Módulo 3 (Análise de Dados)
             [
                 {
                     question: "Quais são as principais bibliotecas Python para análise de dados?",
@@ -719,14 +719,14 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "Qual biblioteca é mais adequada para visualização de dados em Python?",
+                    question: "De acordo com os vídeos, qual destas bibliotecas é necessária para que o Pandas trabalhe com arquivos Excel?",
                     options: [
-                        "NumPy",
-                        "Pandas",
-                        "Matplotlib ou Seaborn",
-                        "SciPy"
+                        "xlsxwriter",
+                        "openpyxl",
+                        "excelpy",
+                        "pyxlsx"
                     ],
-                    correctAnswer: 2
+                    correctAnswer: 1
                 },
                 {
                     question: "O que faz o método .describe() no Pandas?",
@@ -741,21 +741,20 @@ const moduleData = {
                 {
                     question: "Como você seleciona uma coluna específica em um DataFrame?",
                     options: [
-                        "df.column('nome_coluna')",
-                        "df.column('nome_coluna')",
+                        "df.get_column('nome_coluna')",
                         "df['nome_coluna']",
-                        "df.select('nome_coluna')",
-                        "df.get('nome_coluna')"
+                        "df.column('nome_coluna')",
+                        "df.select('nome_coluna')"
                     ],
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é o método .groupby() usado para fazer?",
+                    question: "De acordo com o vídeo, qual é a forma mais fácil de instalar o Pandas junto com outras bibliotecas de ciência de dados?",
                     options: [
-                        "Ordenar os dados",
-                        "Agrupar dados com base em valores específicos",
-                        "Criar grupos de DataFrames separados",
-                        "Combinar múltiplos DataFrames"
+                        "Usando o gerenciador de pacotes pip",
+                        "Instalando o Anaconda",
+                        "Compilando o código fonte",
+                        "Usando o apt-get install"
                     ],
                     correctAnswer: 1
                 },
@@ -770,7 +769,7 @@ const moduleData = {
                     correctAnswer: 1
                 }
             ],
-            // Segunda variação do quiz para Módulo 3
+            // Segunda variação do quiz para Módulo 3 (Análise de Dados)
             [
                 {
                     question: "O que é um 'pivot table' no Pandas?",
@@ -793,12 +792,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que faz o método .apply() no Pandas?",
+                    question: "Segundo o vídeo, qual é a linha de código para importar o Pandas?",
                     options: [
-                        "Aplica uma formatação visual ao DataFrame",
-                        "Aplica uma função a cada elemento, linha ou coluna",
-                        "Aplica filtros aos dados",
-                        "Aplica configurações específicas ao DataFrame"
+                        "import pandas",
+                        "import pandas as pd",
+                        "from pandas import *",
+                        "require pandas"
                     ],
                     correctAnswer: 1
                 },
@@ -833,12 +832,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que a função pd.melt() faz?",
+                    question: "Conforme explicado no vídeo sobre Excel, como se pode ler uma aba específica de uma planilha pelo seu nome usando Pandas?",
                     options: [
-                        "Derrete dados numéricos para aproximar valores",
-                        "Altera o formato de 'wide' para 'long'",
-                        "Combina múltiplos DataFrames",
-                        "Converte tipos de dados numéricos para strings"
+                        "pd.read_excel('arquivo.xlsx', tab='nome_aba')",
+                        "pd.read_excel('arquivo.xlsx', sheet_name='nome_aba')",
+                        "pd.read_excel('arquivo.xlsx', worksheet='nome_aba')",
+                        "pd.read_excel('arquivo.xlsx', sheet='nome_aba')"
                     ],
                     correctAnswer: 1
                 },
@@ -873,7 +872,7 @@ const moduleData = {
                     correctAnswer: 1
                 }
             ],
-            // Terceira variação do quiz para Módulo 3
+            // Terceira variação do quiz para Módulo 3 (Análise de Dados)
             [
                 {
                     question: "Qual destas é uma vantagem de usar o Pandas para análise de dados?",
@@ -906,14 +905,14 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "Qual método é usado para agrupar dados e aplicar uma função a cada grupo?",
+                    question: "Segundo o vídeo, qual a diferença entre usar Pandas e OpenPyXL para trabalhar com Excel?",
                     options: [
-                        "df.group()",
-                        "df.groupby().agg()",
-                        "df.cluster()",
-                        "df.categorize()"
+                        "Pandas é mais lento, OpenPyXL é mais rápido",
+                        "Pandas é para leitura, OpenPyXL apenas para escrita",
+                        "Pandas é para manipulação de dados, OpenPyXL para formatação e recursos avançados",
+                        "Não há diferenças significativas entre eles"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 2
                 },
                 {
                     question: "O que é um 'outlier' na análise de dados?",
@@ -936,14 +935,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual biblioteca é frequentemente usada com Pandas para análise estatística avançada?",
+                    question: "De acordo com o vídeo, qual ambiente online já tem o Pandas pré-instalado?",
                     options: [
-                        "PyStats",
-                        "StatsLib",
-                        "StatPy",
-                        "SciPy"
+                        "VS Code Online",
+                        "Google Colab",
+                        "Jupyter Online",
+                        "PyCharm Cloud"
                     ],
-                    correctAnswer: 3
+                    correctAnswer: 1
                 },
                 {
                     question: "O que significa quando dizemos que as operações no Pandas são 'vetorizadas'?",
@@ -956,14 +955,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual é o propósito da função pd.crosstab()?",
+                    question: "Como você lê uma planilha Excel específica pelo seu índice?",
                     options: [
-                        "Criar tabelas HTML",
-                        "Aplicar validação cruzada para machine learning",
-                        "Criar tabelas de contingência para análise de frequências",
-                        "Converter entre diferentes formatos de dados"
+                        "pd.read_excel('arquivo.xlsx', sheet=2)",
+                        "pd.read_excel('arquivo.xlsx', sheet_name=2)",
+                        "pd.read_excel('arquivo.xlsx', index=2)",
+                        "pd.read_excel('arquivo.xlsx', sheet_index=2)"
                     ],
-                    correctAnswer: 2
+                    correctAnswer: 1
                 },
                 {
                     question: "Qual destas NÃO é uma etapa comum no processo de análise de dados?",
@@ -981,7 +980,7 @@ const moduleData = {
     final: {
         name: "Exame Final",
         quizzes: [
-            // Primeira variação do exame final
+            // Primeira variação do exame final (atualizada)
             [
                 {
                     question: "Qual biblioteca Python é mais adequada para realizar requisições HTTP a uma API?",
@@ -994,7 +993,7 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é o método HTTP mais apropriado para obter dados de uma API?",
+                    question: "Qual método HTTP é mais apropriado para obter dados de uma API?",
                     options: [
                         "POST",
                         "PUT",
@@ -1054,7 +1053,7 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "O que é um JSON?",
+                    question: "Conforme explicado nos vídeos, o que é um JSON?",
                     options: [
                         "Um tipo de arquivo de imagem",
                         "Uma linguagem de programação",
@@ -1084,12 +1083,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é uma API key?",
+                    question: "De acordo com os vídeos de API, qual método HTTP é usado para criar novos dados?",
                     options: [
-                        "Uma chave para criptografar dados",
-                        "Um token para autenticar requisições a uma API",
-                        "Uma senha para acessar o código-fonte da API",
-                        "Uma chave para desbloquear funcionalidades premium de um software"
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE"
                     ],
                     correctAnswer: 1
                 },
@@ -1124,17 +1123,17 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Como você pode selecionar linhas em um DataFrame com base em uma condição?",
+                    question: "Em Python, como você verifica se uma requisição a uma API foi bem-sucedida?",
                     options: [
-                        "df.select_where(condição)",
-                        "df.filter(condição)",
-                        "df[df['coluna'] > valor]",
-                        "df.query('coluna > valor')"
+                        "Verificando se response.ok é True",
+                        "Usando o método check_success()",
+                        "Verificando se o status_code é 200",
+                        "Todas as opções anteriores estão corretas"
                     ],
                     correctAnswer: 2
                 }
             ],
-            // Segunda variação do exame final
+            // Segunda variação do exame final (atualizada)
             [
                 {
                     question: "Qual destas é uma forma de lidar com erros em requisições a APIs?",
@@ -1147,12 +1146,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é uma 'rate limit' em APIs?",
+                    question: "No contexto de APIs, o que significa fazer uma requisição POST?",
                     options: [
-                        "A velocidade máxima de transferência de dados",
-                        "O número máximo de requisições permitidas em um período",
-                        "O tamanho máximo da resposta",
-                        "O custo por requisição"
+                        "Obter dados do servidor",
+                        "Criar novos dados no servidor",
+                        "Atualizar dados existentes no servidor",
+                        "Excluir dados do servidor"
                     ],
                     correctAnswer: 1
                 },
@@ -1197,7 +1196,7 @@ const moduleData = {
                     correctAnswer: 0
                 },
                 {
-                    question: "O que é uma 'API REST'?",
+                    question: "De acordo com os vídeos, o que é uma 'API REST'?",
                     options: [
                         "Um tipo de API que só funciona quando o servidor está em repouso",
                         "Uma API que segue princípios arquiteturais específicos para comunicação web",
@@ -1207,14 +1206,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual método HTTP é geralmente usado para criar um novo recurso em uma API?",
+                    question: "Conforme explicado nos vídeos, qual método HTTP é usado para atualizar parcialmente um recurso?",
                     options: [
                         "GET",
                         "POST",
-                        "PUT",
+                        "PATCH",
                         "DELETE"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 2
                 },
                 {
                     question: "O que é o 'Cron' no contexto de automação?",
@@ -1257,12 +1256,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual é a principal vantagem da análise de dados com Python?",
+                    question: "Na analogia do garçom apresentada no vídeo de API, o que representaria o backend?",
                     options: [
-                        "É a única linguagem que suporta análise de dados",
-                        "Funciona apenas em Windows",
-                        "Possui um rico ecossistema de bibliotecas gratuitas e de código aberto",
-                        "É a linguagem mais rápida para processamento de dados"
+                        "O cliente sentado na mesa",
+                        "O garçom",
+                        "A cozinha",
+                        "O menu"
                     ],
                     correctAnswer: 2
                 },
@@ -1287,7 +1286,7 @@ const moduleData = {
                     correctAnswer: 2
                 }
             ],
-            // Terceira variação do exame final
+            // Terceira variação do exame final (atualizada)
             [
                 {
                     question: "Qual formato de dados é mais comumente retornado por APIs modernas?",
@@ -1320,7 +1319,7 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "O que é RPA?",
+                    question: "No contexto de automação, o que significa RPA?",
                     options: [
                         "Rapid Python Analysis",
                         "Robotic Process Automation",
@@ -1350,12 +1349,12 @@ const moduleData = {
                     correctAnswer: 2
                 },
                 {
-                    question: "O que é uma 'API webhook'?",
+                    question: "De acordo com os vídeos, para que serve a biblioteca requests em Python?",
                     options: [
-                        "Uma API que usa exclusivamente o método GET",
-                        "Uma API que notifica seu aplicativo quando um evento ocorre",
-                        "Uma API para desenvolvimento web",
-                        "Uma API que só funciona com navegadores"
+                        "Para criar interfaces gráficas",
+                        "Para fazer requisições a APIs e sites",
+                        "Para manipular bancos de dados SQL",
+                        "Para processar imagens"
                     ],
                     correctAnswer: 1
                 },
@@ -1400,12 +1399,12 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Como você pode aplicar uma função a cada elemento de um DataFrame?",
+                    question: "No vídeo de API, como você converte a resposta de uma API em um formato utilizável em Python?",
                     options: [
-                        "df.map(funcao)",
-                        "df.apply(funcao)",
-                        "df.use(funcao)",
-                        "df.transform(funcao)"
+                        "response.convert()",
+                        "response.json()",
+                        "response.to_python()",
+                        "response.format()"
                     ],
                     correctAnswer: 1
                 },
@@ -1430,14 +1429,14 @@ const moduleData = {
                     correctAnswer: 1
                 },
                 {
-                    question: "Qual biblioteca é frequentemente usada para visualizações estatísticas em Python?",
+                    question: "No segundo vídeo sobre API, quais são os quatro principais tipos de interações com dados?",
                     options: [
-                        "StatPlot",
-                        "Seaborn",
-                        "VisualPy",
-                        "GraphLib"
+                        "Pegar, Criar, Atualizar, Deletar",
+                        "Selecionar, Inserir, Modificar, Remover",
+                        "GET, POST, PUT/PATCH, DELETE",
+                        "Read, Write, Edit, Erase"
                     ],
-                    correctAnswer: 1
+                    correctAnswer: 2
                 }
             ]
         ]
