@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: 3sDevSchool
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
