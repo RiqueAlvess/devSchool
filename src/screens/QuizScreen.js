@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { FaExclamationTriangle } from 'react-icons/fa';
+import { FaExclamationTriangle, FaClock } from 'react-icons/fa';
 import Button from '../components/Button';
 import { ProgressContext } from '../contexts/ProgressContext';
 import moduleData from '../data/moduleData';
@@ -45,6 +45,45 @@ const Progress = styled.div`
   background-color: ${props => props.theme.colors.accentPrimary};
   width: ${props => props.percentage}%;
   transition: width 0.3s;
+`;
+
+const TimerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: ${props => props.timeLeft <= 10 ? props.theme.colors.error : props.theme.colors.textPrimary};
+  font-weight: ${props => props.timeLeft <= 10 ? 'bold' : 'normal'};
+  transition: color 0.3s;
+`;
+
+const TimerIcon = styled(FaClock)`
+  font-size: 1.2rem;
+`;
+
+const TimerText = styled.span`
+  font-size: 1.1rem;
+`;
+
+const TimerProgressBar = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: ${props => props.theme.colors.bgTertiary};
+  border-radius: 2px;
+  margin-top: 5px;
+  overflow: hidden;
+`;
+
+const TimerProgress = styled.div`
+  height: 100%;
+  background-color: ${props => 
+    props.timeLeft <= 10 
+      ? props.theme.colors.error 
+      : props.timeLeft <= 20 
+        ? props.theme.colors.warning 
+        : props.theme.colors.accentPrimary};
+  width: ${props => (props.timeLeft / 45) * 100}%;
+  transition: width 1s linear, background-color 0.3s;
 `;
 
 const QuestionContainer = styled.div`
@@ -152,17 +191,69 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
-  const { resetModule } = useContext(ProgressContext);
+  const [timeLeft, setTimeLeft] = useState(45); // 45 segundos por pergunta
+  const timerIntervalRef = useRef(null);
+  const { saveQuizResult, resetModule } = useContext(ProgressContext);
   
   const module = moduleData[moduleId];
   const quizVariation = module.quizzes[variationIndex];
   const totalQuestions = quizVariation.length;
+  
+  // Iniciar o timer quando a página carrega ou quando a pergunta muda
+  useEffect(() => {
+    setTimeLeft(45);
+    
+    // Limpar qualquer temporizador anterior
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+    }
+    
+    // Iniciar novo temporizador
+    timerIntervalRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          // Tempo esgotado, passar para a próxima pergunta
+          clearInterval(timerIntervalRef.current);
+          handleNextQuestion();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    // Limpar temporizador quando o componente é desmontado ou a pergunta muda
+    return () => {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+      }
+    };
+  }, [currentQuestion]);
   
   // Detectar quando o usuário sai da página ou guia
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         setShowAlert(true);
+        
+        // Pausar o temporizador se o usuário sair da página
+        if (timerIntervalRef.current) {
+          clearInterval(timerIntervalRef.current);
+        }
+      } else if (document.visibilityState === 'visible' && !showAlert) {
+        // Retomar o temporizador se o usuário voltar e o alerta não estiver visível
+        if (!timerIntervalRef.current) {
+          timerIntervalRef.current = setInterval(() => {
+            setTimeLeft(prev => {
+              if (prev <= 1) {
+                // Tempo esgotado, passar para a próxima pergunta
+                clearInterval(timerIntervalRef.current);
+                handleNextQuestion();
+                return 0;
+              }
+              return prev - 1;
+            });
+          }, 1000);
+        }
       }
     };
     
@@ -171,7 +262,7 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [showAlert]);
   
   const handleOptionSelect = (index) => {
     setSelectedOption(index);
@@ -183,9 +274,13 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
   };
   
   const handleNextQuestion = () => {
-    if (selectedOption === null) return;
+    // Limpar o temporizador antes de avançar
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
     
-    // Salvar resposta
+    // Salvar resposta (ou null se não houver seleção)
     const newAnswers = [...answers, selectedOption];
     setAnswers(newAnswers);
     
@@ -204,7 +299,8 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
     let correctCount = 0;
     
     finalAnswers.forEach((answer, index) => {
-      if (answer === quizVariation[index].correctAnswer) {
+      // Se a resposta for null (não respondeu) ou incorreta, não incrementa o contador
+      if (answer !== null && answer === quizVariation[index].correctAnswer) {
         correctCount++;
       }
     });
@@ -212,6 +308,10 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
     const scorePercentage = Math.round((correctCount / totalQuestions) * 100);
     const passed = scorePercentage >= 70;
     
+    // Salvar o resultado do quiz no contexto
+    saveQuizResult(moduleId, variationIndex, scorePercentage, passed);
+    
+    // Notificar o App.js sobre a conclusão do quiz
     onQuizComplete(passed, scorePercentage);
   };
   
@@ -245,6 +345,14 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
           </ProgressBar>
         </QuizProgressContainer>
         
+        <TimerContainer timeLeft={timeLeft}>
+          <TimerIcon />
+          <TimerText>Tempo restante: {timeLeft} segundos</TimerText>
+          <TimerProgressBar>
+            <TimerProgress timeLeft={timeLeft} />
+          </TimerProgressBar>
+        </TimerContainer>
+        
         <QuestionContainer>
           <QuestionText>{question.question}</QuestionText>
           <OptionsContainer>
@@ -253,10 +361,7 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
         </QuestionContainer>
         
         <QuizNavigation>
-          <Button 
-            onClick={handleNextQuestion}
-            disabled={selectedOption === null}
-          >
+          <Button onClick={handleNextQuestion}>
             {currentQuestion < totalQuestions - 1 ? 'Próxima Pergunta' : 'Finalizar Prova'}
           </Button>
         </QuizNavigation>
