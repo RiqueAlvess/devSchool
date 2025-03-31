@@ -14,9 +14,9 @@ export const ProgressProvider = ({ children }) => {
     return {
       currentModule: 1,
       moduleStatus: {
-        1: { unlocked: true, completed: false, currentVideo: 0, allVideosWatched: false },
-        2: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
-        3: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
+        1: { unlocked: true, completed: false, currentVideo: 0, allVideosWatched: false, watchedVideos: [] },
+        2: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false, watchedVideos: [] },
+        3: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false, watchedVideos: [] },
         final: { unlocked: false, completed: false }
       },
       quizHistory: {}
@@ -105,9 +105,9 @@ export const ProgressProvider = ({ children }) => {
     const initialProgress = {
       currentModule: 1,
       moduleStatus: {
-        1: { unlocked: true, completed: false, currentVideo: 0, allVideosWatched: false },
-        2: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
-        3: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
+        1: { unlocked: true, completed: false, currentVideo: 0, allVideosWatched: false, watchedVideos: [] },
+        2: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false, watchedVideos: [] },
+        3: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false, watchedVideos: [] },
         final: { unlocked: false, completed: false }
       },
       quizHistory: {}
@@ -126,7 +126,8 @@ export const ProgressProvider = ({ children }) => {
           ...prevProgress.moduleStatus[moduleId],
           completed: false,
           currentVideo: 0,
-          allVideosWatched: false
+          allVideosWatched: false,
+          watchedVideos: []
         }
       };
       
