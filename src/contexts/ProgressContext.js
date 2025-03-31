@@ -14,9 +14,9 @@ export const ProgressProvider = ({ children }) => {
     return {
       currentModule: 1,
       moduleStatus: {
-        1: { unlocked: true, completed: false, currentVideo: 0 },
-        2: { unlocked: false, completed: false, currentVideo: 0 },
-        3: { unlocked: false, completed: false, currentVideo: 0 },
+        1: { unlocked: true, completed: false, currentVideo: 0, allVideosWatched: false },
+        2: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
+        3: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
         final: { unlocked: false, completed: false }
       },
       quizHistory: {}
@@ -38,23 +38,6 @@ export const ProgressProvider = ({ children }) => {
           ...updates
         }
       };
-      
-      // Se o módulo atual foi concluído, desbloquear o próximo módulo
-      if (updates.completed && moduleId !== 'final') {
-        const nextModuleId = moduleId + 1;
-        if (prevProgress.moduleStatus[nextModuleId]) {
-          updatedModuleStatus[nextModuleId] = {
-            ...prevProgress.moduleStatus[nextModuleId],
-            unlocked: true
-          };
-        } else if (moduleId === 3) {
-          // Se concluiu o módulo 3, desbloquear o exame final
-          updatedModuleStatus.final = {
-            ...prevProgress.moduleStatus.final,
-            unlocked: true
-          };
-        }
-      }
       
       return {
         ...prevProgress,
@@ -88,13 +71,19 @@ export const ProgressProvider = ({ children }) => {
         
         // Se o módulo atual foi concluído, desbloquear o próximo módulo ou o exame final
         if (moduleId !== 'final') {
-          const nextModuleId = Number(moduleId) + 1;
+          // Converter para número apenas se não for 'final'
+          const currentModuleId = moduleId === 'final' ? moduleId : Number(moduleId);
+          const nextModuleId = currentModuleId === 'final' ? 'final' : currentModuleId + 1;
+          
           if (moduleStatus[nextModuleId]) {
             moduleStatus[nextModuleId] = {
               ...moduleStatus[nextModuleId],
               unlocked: true
             };
-          } else if (moduleId === 3) {
+          }
+          
+          // Se for o módulo 3, também desbloquear o exame final
+          if (currentModuleId === 3) {
             moduleStatus.final = {
               ...moduleStatus.final,
               unlocked: true
@@ -116,9 +105,9 @@ export const ProgressProvider = ({ children }) => {
     const initialProgress = {
       currentModule: 1,
       moduleStatus: {
-        1: { unlocked: true, completed: false, currentVideo: 0 },
-        2: { unlocked: false, completed: false, currentVideo: 0 },
-        3: { unlocked: false, completed: false, currentVideo: 0 },
+        1: { unlocked: true, completed: false, currentVideo: 0, allVideosWatched: false },
+        2: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
+        3: { unlocked: false, completed: false, currentVideo: 0, allVideosWatched: false },
         final: { unlocked: false, completed: false }
       },
       quizHistory: {}
@@ -136,7 +125,8 @@ export const ProgressProvider = ({ children }) => {
         [moduleId]: {
           ...prevProgress.moduleStatus[moduleId],
           completed: false,
-          currentVideo: 0
+          currentVideo: 0,
+          allVideosWatched: false
         }
       };
       
