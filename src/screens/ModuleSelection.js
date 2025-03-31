@@ -149,14 +149,36 @@ const ModuleSelection = ({ onModuleSelect }) => {
   ];
   
   const handleModuleClick = (moduleId) => {
+    // Verificar se o moduleId existe no progress.moduleStatus
+    if (!progress.moduleStatus[moduleId]) {
+      console.error(`Módulo com ID ${moduleId} não encontrado em progress.moduleStatus`);
+      return;
+    }
+    
     const moduleStatus = progress.moduleStatus[moduleId];
+    
     if (moduleStatus && moduleStatus.unlocked) {
+      console.log(`Selecionando módulo: ${moduleId}`);
       onModuleSelect(moduleId);
+    } else {
+      console.log(`Módulo ${moduleId} está bloqueado`);
     }
   };
   
   const getModuleStatus = (moduleId) => {
+    // Verificar se o moduleId existe no progress.moduleStatus
+    if (!progress.moduleStatus[moduleId]) {
+      console.error(`Módulo com ID ${moduleId} não encontrado em progress.moduleStatus`);
+      return { 
+        text: "Desconhecido", 
+        icon: null, 
+        completed: false, 
+        unlocked: false 
+      };
+    }
+    
     const moduleStatus = progress.moduleStatus[moduleId];
+    
     if (moduleStatus.completed) {
       return { 
         text: "Concluído", 
