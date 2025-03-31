@@ -106,7 +106,7 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
   const [videoEnded, setVideoEnded] = useState(false);
   const countdownIntervalRef = useRef(null);
   
-  const { progress, updateModuleProgress, resetModule } = useContext(ProgressContext);
+  const { updateModuleProgress, resetModule } = useContext(ProgressContext);
   
   const module = moduleData[moduleId];
   const video = module.videos[videoIndex];
