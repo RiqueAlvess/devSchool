@@ -186,6 +186,15 @@ const AlertText = styled.p`
   margin-bottom: 20px;
 `;
 
+const ErrorMessage = styled.div`
+  background-color: ${props => props.theme.colors.error};
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
 const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -194,32 +203,18 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
   const [timeLeft, setTimeLeft] = useState(45); // 45 segundos por pergunta
   const timerIntervalRef = useRef(null);
   const { saveQuizResult, resetModule } = useContext(ProgressContext);
+  const [error, setError] = useState(null);
+  const [quizData, setQuizData] = useState({
+    module: null,
+    quizVariation: null,
+    totalQuestions: 0
+  });
   
-  // Verificar se o módulo existe no moduleData
-  if (!moduleData[moduleId]) {
-    console.error(`Módulo com ID ${moduleId} não encontrado em moduleData`);
-    return <div>Erro: Módulo não encontrado</div>;
-  }
-  
-  const module = moduleData[moduleId];
-  
-  // Verificar se o módulo tem a propriedade quizzes
-  if (!module.quizzes) {
-    console.error(`Módulo ${moduleId} não tem a propriedade quizzes`);
-    return <div>Erro: Quizzes não encontrados no módulo</div>;
-  }
-  
-  // Verificar se a variação do quiz existe
-  if (!module.quizzes[variationIndex]) {
-    console.error(`Variação ${variationIndex} não encontrada no módulo ${moduleId}`);
-    return <div>Erro: Variação do quiz não encontrada</div>;
-  }
-  
-  const quizVariation = module.quizzes[variationIndex];
-  const totalQuestions = quizVariation.length;
-  
-  // Usando useCallback para envolver handleNextQuestion
+  // Usando useCallback para envolver handleNextQuestion - agora definido incondicionalmente
   const handleNextQuestion = useCallback(() => {
+    // Não executar a lógica se houver erro ou dados incompletos
+    if (error || !quizData.quizVariation) return;
+    
     // Limpar o temporizador antes de avançar
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
@@ -230,40 +225,80 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
     const newAnswers = [...answers, selectedOption];
     setAnswers(newAnswers);
     
-    if (currentQuestion < totalQuestions - 1) {
+    if (currentQuestion < quizData.totalQuestions - 1) {
       // Avançar para a próxima pergunta
       setCurrentQuestion(prevQuestion => prevQuestion + 1);
       setSelectedOption(null);
     } else {
       // Finalizar quiz
-      finishQuiz(newAnswers);
+      // Calcular pontuação
+      let correctCount = 0;
+      
+      newAnswers.forEach((answer, index) => {
+        // Se a resposta for null (não respondeu) ou incorreta, não incrementa o contador
+        if (answer !== null && answer === quizData.quizVariation[index].correctAnswer) {
+          correctCount++;
+        }
+      });
+      
+      const scorePercentage = Math.round((correctCount / quizData.totalQuestions) * 100);
+      const passed = scorePercentage >= 70;
+      
+      // Salvar o resultado do quiz no contexto
+      saveQuizResult(moduleId, variationIndex, scorePercentage, passed);
+      
+      // Notificar o App.js sobre a conclusão do quiz
+      onQuizComplete(passed, scorePercentage);
     }
-  }, [answers, currentQuestion, selectedOption, totalQuestions, onQuizComplete]); // Adicionei onQuizComplete na lista
+  }, [answers, currentQuestion, selectedOption, quizData, error, moduleId, variationIndex, onQuizComplete, saveQuizResult]);
 
-  // Função de finalização do quiz extraída para fora do useCallback
-  const finishQuiz = (finalAnswers) => {
-    // Calcular pontuação
-    let correctCount = 0;
-    
-    finalAnswers.forEach((answer, index) => {
-      // Se a resposta for null (não respondeu) ou incorreta, não incrementa o contador
-      if (answer !== null && answer === quizVariation[index].correctAnswer) {
-        correctCount++;
-      }
-    });
-    
-    const scorePercentage = Math.round((correctCount / totalQuestions) * 100);
-    const passed = scorePercentage >= 70;
-    
-    // Salvar o resultado do quiz no contexto
-    saveQuizResult(moduleId, variationIndex, scorePercentage, passed);
-    
-    // Notificar o App.js sobre a conclusão do quiz
-    onQuizComplete(passed, scorePercentage);
-  };
-  
-  // Iniciar o timer quando a página carrega ou quando a pergunta muda
+  // Efeito para carregar os dados do quiz - agora definido incondicionalmente
   useEffect(() => {
+    try {
+      // Verificar se o módulo existe no moduleData
+      if (!moduleData[moduleId]) {
+        throw new Error(`Módulo com ID ${moduleId} não encontrado em moduleData`);
+      }
+      
+      const module = moduleData[moduleId];
+      
+      // Verificar se o módulo tem a propriedade quizzes
+      if (!module.quizzes) {
+        throw new Error(`Módulo ${moduleId} não tem a propriedade quizzes`);
+      }
+      
+      // Verificar se a variação do quiz existe
+      if (!module.quizzes[variationIndex]) {
+        throw new Error(`Variação ${variationIndex} não encontrada no módulo ${moduleId}`);
+      }
+      
+      const quizVariation = module.quizzes[variationIndex];
+      const totalQuestions = quizVariation.length;
+      
+      // Verificar se temos perguntas
+      if (!quizVariation || quizVariation.length === 0) {
+        throw new Error('Não há perguntas disponíveis para este quiz');
+      }
+      
+      // Configurar os dados do quiz
+      setQuizData({
+        module,
+        quizVariation,
+        totalQuestions
+      });
+      
+      setError(null);
+    } catch (err) {
+      console.error(err.message);
+      setError(err.message);
+    }
+  }, [moduleId, variationIndex]);
+  
+  // Iniciar o timer quando a página carrega ou quando a pergunta muda - agora definido incondicionalmente
+  useEffect(() => {
+    // Não iniciar o timer se houver erro ou dados incompletos
+    if (error || !quizData.quizVariation) return;
+    
     setTimeLeft(45);
     
     // Limpar qualquer temporizador anterior
@@ -290,10 +325,13 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
         clearInterval(timerIntervalRef.current);
       }
     };
-  }, [currentQuestion, handleNextQuestion]); // Adicionei handleNextQuestion à lista de dependências
+  }, [currentQuestion, handleNextQuestion, error, quizData]);
   
-  // Detectar quando o usuário sai da página ou guia
+  // Detectar quando o usuário sai da página ou guia - agora definido incondicionalmente
   useEffect(() => {
+    // Não monitorar visibilidade se houver erro ou dados incompletos
+    if (error || !quizData.quizVariation) return;
+    
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         setShowAlert(true);
@@ -325,7 +363,7 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [showAlert, handleNextQuestion]); // Adicionei handleNextQuestion à lista de dependências
+  }, [showAlert, handleNextQuestion, error, quizData]);
   
   const handleOptionSelect = (index) => {
     setSelectedOption(index);
@@ -336,13 +374,34 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
     window.location.reload();
   };
   
-  // Verificar se temos perguntas antes de tentar acessá-las
-  if (!quizVariation || quizVariation.length === 0) {
-    return <div>Erro: Não há perguntas disponíveis para este quiz</div>;
+  // Se houver erro, mostrar mensagem
+  if (error) {
+    return (
+      <QuizContainer>
+        <ErrorMessage>
+          <h3>Erro ao carregar o quiz</h3>
+          <p>{error}</p>
+          <Button variant="secondary" onClick={() => window.location.reload()}>
+            Tentar novamente
+          </Button>
+        </ErrorMessage>
+      </QuizContainer>
+    );
   }
   
-  const question = quizVariation[currentQuestion];
-  const progressPercentage = ((currentQuestion + 1) / totalQuestions) * 100;
+  // Se os dados ainda não foram carregados, mostrar mensagem de carregamento
+  if (!quizData.quizVariation) {
+    return (
+      <QuizContainer>
+        <QuizContent>
+          <QuizTitle>Carregando quiz...</QuizTitle>
+        </QuizContent>
+      </QuizContainer>
+    );
+  }
+  
+  const question = quizData.quizVariation[currentQuestion];
+  const progressPercentage = ((currentQuestion + 1) / quizData.totalQuestions) * 100;
   
   const renderOptions = () => {
     const letters = ['A', 'B', 'C', 'D'];
@@ -365,7 +424,7 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
         <QuizTitle>Prova: Módulo {moduleId === 'final' ? 'Final' : moduleId}</QuizTitle>
         
         <QuizProgressContainer>
-          <QuestionCounter>Questão {currentQuestion + 1} de {totalQuestions}</QuestionCounter>
+          <QuestionCounter>Questão {currentQuestion + 1} de {quizData.totalQuestions}</QuestionCounter>
           <ProgressBar>
             <Progress percentage={progressPercentage} />
           </ProgressBar>
@@ -388,7 +447,7 @@ const QuizScreen = ({ moduleId, variationIndex, onQuizComplete }) => {
         
         <QuizNavigation>
           <Button onClick={handleNextQuestion}>
-            {currentQuestion < totalQuestions - 1 ? 'Próxima Pergunta' : 'Finalizar Prova'}
+            {currentQuestion < quizData.totalQuestions - 1 ? 'Próxima Pergunta' : 'Finalizar Prova'}
           </Button>
         </QuizNavigation>
         
