@@ -179,6 +179,23 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
     setPlayer(event.target);
   };
   
+  // Ao iniciar o componente, carregar os vídeos já assistidos do localStorage
+  useEffect(() => {
+    // Tentativa de carregar o estado salvo do localStorage
+    const savedProgress = localStorage.getItem('pythonLearningProgress');
+    if (savedProgress) {
+      try {
+        const progressData = JSON.parse(savedProgress);
+        // Verificar se existe um array de vídeos assistidos para este módulo
+        if (progressData.moduleStatus[moduleId]?.watchedVideos) {
+          setWatchedVideos(progressData.moduleStatus[moduleId].watchedVideos);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar progresso:", error);
+      }
+    }
+  }, [moduleId]);
+
   const handleStateChange = (event) => {
     // Estado 0 = vídeo terminou
     if (event.data === 0) {
@@ -194,10 +211,11 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
           updatedWatchedVideos.includes(idx)
         );
         
-        // Salvar progresso
+        // Salvar progresso com a lista de vídeos assistidos
         updateModuleProgress(moduleId, { 
           currentVideo: videoIndex,
-          allVideosWatched: allVideosWatched
+          allVideosWatched: allVideosWatched,
+          watchedVideos: updatedWatchedVideos
         });
       }
     }
@@ -212,11 +230,15 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
   };
   
   // Verificar se todos os vídeos do módulo foram assistidos
+  // Um vídeo só conta como assistido se estiver na lista de watchedVideos
   const allVideosWatched = module.videos.every((_, idx) => 
-    watchedVideos.includes(idx) || idx === videoIndex && videoEnded
+    watchedVideos.includes(idx)
   );
   
-  // Ajustar a lógica para só mostrar o botão de iniciar prova quando todos os vídeos forem assistidos
+  // Agora precisamos verificar:
+  // 1. Se o vídeo atual terminou
+  // 2. Se é o último vídeo do módulo
+  // 3. Se TODOS os vídeos anteriores já foram assistidos (incluindo qualquer um que possa ter sido pulado)
   const showStartQuizButton = videoEnded && isLastVideo && allVideosWatched;
   
   const opts = {
