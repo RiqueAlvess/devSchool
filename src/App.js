@@ -27,7 +27,16 @@ function App() {
   const handleModuleSelect = (moduleId) => {
     setCurrentModule(moduleId);
     setCurrentVideo(0);
-    setCurrentScreen('video');
+    
+    // Verificar se o módulo selecionado é o exame final
+    if (moduleId === 'final') {
+      // Selecionar aleatoriamente uma variação do quiz final (0, 1 ou 2)
+      const randomVariation = Math.floor(Math.random() * 3);
+      setQuizVariation(randomVariation);
+      setCurrentScreen('quiz'); // Ir direto para o quiz sem passar pelo VideoPlayer
+    } else {
+      setCurrentScreen('video');
+    }
   };
 
   const handleVideoComplete = (isLastVideo) => {
@@ -56,7 +65,16 @@ function App() {
 
   const handleRetryModule = () => {
     setCurrentVideo(0);
-    setCurrentScreen('video');
+    
+    // Verificar se o módulo é o exame final
+    if (currentModule === 'final') {
+      // Selecionar uma nova variação aleatória
+      const randomVariation = Math.floor(Math.random() * 3);
+      setQuizVariation(randomVariation);
+      setCurrentScreen('quiz'); // Ir direto para o quiz
+    } else {
+      setCurrentScreen('video');
+    }
   };
 
   const handleRestart = () => {
