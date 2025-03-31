@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import { FaExclamationCircle } from 'react-icons/fa';
@@ -112,17 +112,16 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
   const video = module.videos[videoIndex];
   const isLastVideo = videoIndex === module.videos.length - 1;
   
-  // Função para parar a contagem regressiva
-  const stopCountdown = () => {
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-  };
-  
   // Detectar quando o usuário sai da página ou guia
   useEffect(() => {
-    // Definir a função startCountdown dentro do useEffect para evitar erros ESLint
+    // Definir ambas as funções dentro do useEffect para evitar erros ESLint
+    const stopCountdown = () => {
+      if (countdownIntervalRef.current) {
+        clearInterval(countdownIntervalRef.current);
+        countdownIntervalRef.current = null;
+      }
+    };
+    
     const startCountdown = () => {
       setCountdown(180); // Resetar para 3 minutos
       
@@ -169,9 +168,11 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
     
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      stopCountdown();
+      if (countdownIntervalRef.current) {
+        clearInterval(countdownIntervalRef.current);
+      }
     };
-  }, [player, showAlert, videoEnded, moduleId, resetModule, stopCountdown]);
+  }, [player, showAlert, videoEnded, moduleId, resetModule]);
   
   const handleReady = (event) => {
     setPlayer(event.target);
