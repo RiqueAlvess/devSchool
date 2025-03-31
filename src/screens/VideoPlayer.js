@@ -104,6 +104,7 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [countdown, setCountdown] = useState(180); // 3 minutos em segundos
   const [videoEnded, setVideoEnded] = useState(false);
+  const [watchedVideos, setWatchedVideos] = useState([]);
   const countdownIntervalRef = useRef(null);
   
   const { updateModuleProgress, resetModule } = useContext(ProgressContext);
@@ -182,8 +183,23 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
     // Estado 0 = vídeo terminou
     if (event.data === 0) {
       setVideoEnded(true);
-      // Salvar progresso
-      updateModuleProgress(moduleId, { currentVideo: videoIndex });
+      
+      // Adiciona o vídeo atual à lista de vídeos assistidos
+      if (!watchedVideos.includes(videoIndex)) {
+        const updatedWatchedVideos = [...watchedVideos, videoIndex];
+        setWatchedVideos(updatedWatchedVideos);
+        
+        // Verificar se todos os vídeos do módulo foram assistidos
+        const allVideosWatched = module.videos.every((_, idx) => 
+          updatedWatchedVideos.includes(idx)
+        );
+        
+        // Salvar progresso
+        updateModuleProgress(moduleId, { 
+          currentVideo: videoIndex,
+          allVideosWatched: allVideosWatched
+        });
+      }
     }
   };
   
@@ -194,6 +210,14 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
   const handleStartQuiz = () => {
     onVideoComplete(true);
   };
+  
+  // Verificar se todos os vídeos do módulo foram assistidos
+  const allVideosWatched = module.videos.every((_, idx) => 
+    watchedVideos.includes(idx) || idx === videoIndex && videoEnded
+  );
+  
+  // Ajustar a lógica para só mostrar o botão de iniciar prova quando todos os vídeos forem assistidos
+  const showStartQuizButton = videoEnded && isLastVideo && allVideosWatched;
   
   const opts = {
     height: '100%',
@@ -232,7 +256,7 @@ const VideoPlayer = ({ moduleId, videoIndex, onVideoComplete }) => {
           {videoEnded && !isLastVideo && (
             <Button onClick={handleNextVideo}>Próximo Vídeo</Button>
           )}
-          {videoEnded && isLastVideo && (
+          {showStartQuizButton && (
             <Button onClick={handleStartQuiz}>Iniciar Prova</Button>
           )}
         </VideoNavigation>
